@@ -1,0 +1,6 @@
+@RealTimeDashboard_HostAddress = http://localhost:5294
+
+GET {{RealTimeDashboard_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
