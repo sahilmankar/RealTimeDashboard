@@ -10,6 +10,24 @@ This project demonstrates a real-time dashboard system using:
 - 💾 Option to **download charts** as images
 
 ---
+## 📺 Demo Video
+
+Watch the dashboard in action:
+
+https://github.com/user-attachments/assets/96708bb0-50d9-46eb-97b6-b896fd484750
+
+## 🚀 Features
+
+- 🔄 **Real-time charts** using SignalR and Chart.js
+- ⏲️ **Configurable auto-refresh** interval (default: 10 seconds)
+- ⚙️ Push data from server using background jobs 
+- 🧍 Group-based updates via SignalR (users only get relevant data)
+- 🔁 Toggle button to enable or disable live data updates
+- 🪛 Drill-down capability for deeper chart insights
+- 📥 **Download** charts as PNG
+- 🧱 Modular, reusable Angular components
+
+---
 ## 🛠️ Tech Stack
 
 | Layer       | Technology        |
@@ -19,17 +37,6 @@ This project demonstrates a real-time dashboard system using:
 | Frontend    | Angular 17      |
 | Charts      | Chart.js + ng2-charts |
 | Styling     | Tailwind CSS      |
-
----
-## 🚀 Features
-
-- 🔄 **Real-time charts** using SignalR and Chart.js
-- ⏲️ **Configurable auto-refresh** interval (default: 10 seconds)
-- 🧍 Group-based updates via SignalR (users only get relevant data)
-- 🔁 Toggle button to enable or disable live data updates
-- 🪛 Drill-down capability for deeper chart insights
-- 📥 **Download** charts as PNG
-- 🧱 Modular, reusable Angular components
 
 ---
 
