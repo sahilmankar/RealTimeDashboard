@@ -1,21 +1,33 @@
-using System.Collections.Concurrent;
+using Microsoft.Extensions.Caching.Distributed;
+using System.Text.Json;
 
 namespace RealTimeDashboard.Services
 {
-    // remove caching if performace is problem /or add redis caching
     public class ChartDataCache
     {
-        private readonly ConcurrentDictionary<(string ChartType, string GroupId), object> _cache = new();
-
-        public void Set(string chartType, string groupId, object data)
+        private readonly IDistributedCache _cache;
+        public ChartDataCache(IDistributedCache cache)
         {
-            _cache[(chartType, groupId)] = data;
+            _cache = cache;
         }
 
-        public object? Get(string chartType, string groupId)
+        private static string GetKey(string chartType, string groupId) => $"chart:{chartType}:{groupId}";
+
+        public async Task SetAsync(string chartType, string groupId, object data, TimeSpan? ttl = null)
         {
-            _cache.TryGetValue((chartType, groupId), out var data);
-            return data;
+            var options = new DistributedCacheEntryOptions
+            {
+                AbsoluteExpirationRelativeToNow = ttl ?? TimeSpan.FromMinutes(2)
+            };
+
+            var serialized = JsonSerializer.Serialize(data,new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase});
+            await _cache.SetStringAsync(GetKey(chartType, groupId), serialized, options);
+        }
+
+        public async Task<T?> GetAsync<T>(string chartType, string groupId)
+        {
+            var serialized = await _cache.GetStringAsync(GetKey(chartType, groupId));
+            return serialized is null ? default : JsonSerializer.Deserialize<T>(serialized,new JsonSerializerOptions { PropertyNameCaseInsensitive=false});
         }
     }
 }

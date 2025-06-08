@@ -2,8 +2,7 @@ namespace RealTimeDashboard.Models
 {
     public class ChartUpdateSettings
     {
-        public int StockPriceChartIntervalSeconds { get; set; }
-        public int VolumeChartIntervalSeconds { get; set; }
-        public int MarketSentimentChartIntervalSeconds { get; set; }
+        public int BarChartIntervalSeconds { get; set; }
+        public int PieChartIntervalSeconds { get; set; }
     }
 }

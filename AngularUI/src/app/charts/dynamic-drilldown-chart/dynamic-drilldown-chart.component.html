@@ -1,0 +1,19 @@
+
+<app-chart-tool-bar [isLiveUpdateEnabled]="isLiveUpdateEnabled" (liveUpdateToggle)="toggleLiveUpdates()"
+    (downloadChart)="downloadChartAsImage()"></app-chart-tool-bar>
+<div class=" text-sm text-gray-600 float-right px-4" style="height: 5%;">
+    <ng-container *ngIf="breadcrumb.length>0">
+        <button class="text-blue-600 hover:underline" (click)="resetDrill()">
+            {{ groupingKeys[0] |titlecase }}
+        </button>
+        <ng-container *ngFor="let level of breadcrumb; let i = index">
+            <span class="mx-1">/</span>
+            <button class="text-blue-600 hover:underline" (click)="goToLevel(i)">
+                {{ level }}
+            </button>
+        </ng-container>
+    </ng-container>
+</div>
+<div style="height: 95%;">
+    <canvas baseChart [datasets]="data" [labels]="labels" [options]="options" chartType="bar"></canvas>
+</div>

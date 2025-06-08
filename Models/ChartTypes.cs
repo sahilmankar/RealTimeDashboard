@@ -2,11 +2,13 @@
 {
     public static class ChartTypes
     {
-        public const string Stock = "Stock";
-        public const string Volume = "Volume";
-        public const string Sentiment = "Sentiment";
+        public const string Bar = "Bar";
+        public const string SalesChart = "SalesChart";
 
-        public static readonly string[] All = { Stock, Volume, Sentiment };
+        public const string Pie = "Pie";
+        public const string Line = "Line";
+
+        public static readonly string[] All = { Bar, Pie, Line , SalesChart };
     }
 
 }

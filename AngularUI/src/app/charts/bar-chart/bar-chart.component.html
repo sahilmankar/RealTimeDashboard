@@ -1,0 +1,19 @@
+<!-- <div class="mb-2 float-end" style="height: 5%;">
+
+  <i class="fas fa-arrows-rotate " [ngClass]="{
+      'text-blue-500': isLiveUpdateEnabled,
+      'text-red-500': !isLiveUpdateEnabled
+    }" style="cursor: pointer;" (click)="toggleLiveUpdates()" title="Toggle Live Updates"></i>
+    <i class="fas fa-download px-2 text-blue-500" (click)="downloadChartAsImage()"></i>
+
+</div> -->
+
+<app-chart-tool-bar
+  [isLiveUpdateEnabled]="isLiveUpdateEnabled"
+  (liveUpdateToggle)="toggleLiveUpdates()"
+  (downloadChart)="downloadChartAsImage()"
+></app-chart-tool-bar>
+<div style="height: 95%;"><canvas baseChart [datasets]="data" [labels]="labels" [type]="'bar'" [options]="options" class="">
+  </canvas>
+
+</div>

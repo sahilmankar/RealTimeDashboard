@@ -1,0 +1,62 @@
+<div
+    class="fixed top-0 left-0 w-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 py-6 rounded-xl shadow-md mb-6">
+    <h1 class="text-center text-3xl font-bold text-white tracking-wide drop-shadow-lg">
+        SignalR Live Dashboards
+    </h1>
+</div>
+<div class="pt-24">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 p-4 ">
+        <div class="bg-white rounded shadow md:col-span-2  p-4 h-80">
+            <app-bar-chart></app-bar-chart>
+
+        </div>
+        <!-- <div class="bg-white rounded shadow p-4 h-80 ">
+    <app-pie-chart></app-pie-chart>
+  </div> -->
+        <div class="bg-white rounded  md:col-span-2 shadow  p-4 h-80 ">
+
+            <app-dynamic-drilldown-chart>
+            </app-dynamic-drilldown-chart>
+        </div>
+
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 p-4 ">
+        <div class="bg-white rounded shadow md:col-span-2  p-4 h-64 ">
+            <!-- <app-pie-chart></app-pie-chart> -->
+            <app-line-chart></app-line-chart>
+        </div>
+        <div class="bg-white rounded shadow  p-4 h-64">
+            <app-pie-chart></app-pie-chart>
+
+
+        </div>
+
+        <div class="bg-white rounded  shadow p-4 h-64 ">
+
+            <app-bar-chart></app-bar-chart>
+        </div>
+    </div>
+
+    
+</div>
+<!-- <div cdkDropList [cdkDropListData]="charts" (cdkDropListDropped)="drop($event)"
+    class="grid grid-cols-2 md:grid-cols-4 gap-4 p-4">
+    <div *ngFor="let chart of charts" cdkDrag class="bg-white p-4 rounded shadow cursor-move h-64"
+        [ngClass]="'col-span-' + chart.span">
+         <div class="example-handle" cdkDragHandle>
+                <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
+                    <path
+                        d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z">
+                    </path>
+                    <path d="M0 0h24v24H0z" fill="none"></path>
+                </svg>
+            </div> {{chart.id}}
+        <ng-container [ngSwitch]="chart.type">
+           
+            <app-bar-chart *ngSwitchCase="'bar'"></app-bar-chart>
+            <app-pie-chart *ngSwitchCase="'pie'"></app-pie-chart>
+            <div *ngSwitchDefault>Unknown chart</div>
+        </ng-container>
+    </div>
+</div> -->

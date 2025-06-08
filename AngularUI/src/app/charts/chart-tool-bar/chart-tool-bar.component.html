@@ -1,0 +1,9 @@
+<div class="mb-2 float-end" style="height: 5%;">
+
+  <i class="fas fa-arrows-rotate cursor-pointer " [ngClass]="{
+      'text-blue-500': isLiveUpdateEnabled,
+      'text-red-500': !isLiveUpdateEnabled
+    }"  (click)="toggleLiveUpdates()" title="Toggle Live Updates"></i>
+    <i class="fas fa-download px-2 text-blue-500 cursor-pointer" title="Download As PNG"(click)="downloadChartAsImage()"></i>
+
+</div>

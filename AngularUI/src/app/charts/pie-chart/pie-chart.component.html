@@ -1,0 +1,6 @@
+<app-chart-tool-bar [isLiveUpdateEnabled]="isLiveUpdateEnabled" (liveUpdateToggle)="toggleLiveUpdates()"
+  (downloadChart)="downloadChartAsImage()"></app-chart-tool-bar>
+<div style="height: 95%;">
+  <canvas baseChart [datasets]="data" [labels]="labels" [type]="'pie'" [options]="options">
+  </canvas>
+</div>

@@ -1,13 +1,18 @@
 using Microsoft.AspNetCore.SignalR;
 using RealTimeDashboard.Models;
 using RealTimeDashboard.Services;
+using System.Text.RegularExpressions;
 
 namespace RealTimeDashboard.Hubs
 {
 
     public interface IChartClient
     {
-        Task ReceiveChartData(string chartType, object data);
+        Task ReceivePieChartData(object data);
+        Task ReceiveBarChartData(object data);
+        Task ReceiveSalesChartData(object data);
+
+
     }
     public class ChartHub : Hub<IChartClient>
     {
@@ -29,38 +34,51 @@ namespace RealTimeDashboard.Hubs
             if (!string.IsNullOrEmpty(groupId))
             {
                 await Groups.AddToGroupAsync(Context.ConnectionId, groupId);
+
                 _groupTracker.AddConnection(groupId, Context.ConnectionId);
-
-                using var scope = _scopeFactory.CreateScope();
-                var chartService = scope.ServiceProvider.GetRequiredService<IChartDataService>();
-
-                foreach (var chartType in ChartTypes.All)
-                {
-                    var existingData = _cache.Get(chartType, groupId);
-
-                    if (existingData is null)
-                    {
-
-                        existingData = await chartService.GenerateChartDataAsync(chartType, groupId);
-                    }
-
-                    await Clients.Caller.ReceiveChartData(chartType, existingData);
-
-                }
             }
             await base.OnConnectedAsync();
         }
 
         public override async Task OnDisconnectedAsync(Exception? exception)
         {
-            var groupId = Context.GetHttpContext()?.Request.Query["groupId"].ToString();
 
-            if (!string.IsNullOrEmpty(groupId))
+            if (_groupTracker.TryRemoveConnection(Context.ConnectionId, out var groupId))
             {
-                _groupTracker.RemoveConnection(groupId, Context.ConnectionId);
+                await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupId);
+            }
+            await base.OnDisconnectedAsync(exception);
+        }
+
+        public async Task RequestChartData(string chartType, string groupId)
+        {
+            if (string.IsNullOrWhiteSpace(groupId))
+                return;
+
+
+            var existingData = await _cache.GetAsync<object>(chartType, groupId);
+
+            if (existingData is null)
+            {
+                using var scope = _scopeFactory.CreateScope();
+                var chartService = scope.ServiceProvider.GetRequiredService<IChartDataService>();
+
+                existingData = await chartService.GenerateChartDataAsync(chartType, groupId);
             }
 
-            await base.OnDisconnectedAsync(exception);
+            switch (chartType)
+            {
+                case ChartTypes.Bar:
+                    await Clients.Caller.ReceiveBarChartData(existingData); break;
+                case ChartTypes.Pie:
+                    await Clients.Caller.ReceivePieChartData(existingData);
+                    break;
+                case ChartTypes.SalesChart:
+                    await Clients.Caller.ReceiveSalesChartData(existingData);
+                    break;
+                default: break;
+            }
+
         }
 
     }
