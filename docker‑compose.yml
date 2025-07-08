@@ -1,0 +1,17 @@
+version: '1.0'
+services:
+  api:
+    build:
+      context: ./Api
+      dockerfile: Dockerfile
+    ports:
+      - "5294:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+
+  angular:
+    build:
+      context: ./AngularApp
+      dockerfile: Dockerfile
+    ports:
+      - "4200:80"

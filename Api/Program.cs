@@ -40,8 +40,6 @@ var app = builder.Build();
 
 // Middleware pipeline
 app.UseCors();
-app.UseDefaultFiles();
-app.UseStaticFiles();
 
 app.MapControllers();
 app.MapHub<ChartHub>("/chartHub");
